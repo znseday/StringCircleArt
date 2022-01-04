@@ -1,0 +1,53 @@
+*~
+*.autosave
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*.so.*
+*_pch.h.cpp
+*_resource.rc
+*.qm
+.#*
+*.*#
+core
+!core/
+tags
+.DS_Store
+.directory
+*.debug
+Makefile*
+*.prl
+*.gch  
+*.pch
+*.app
+Thumbs.db
+*.res
+*.rc
+*.local
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Python byte code
+*.pyc
+
+# Binaries
+*.dll
+*.exe
+
+# Specific files and folder in the project
+/Doc_working
+/Temp
+/Win64
+/Drafts
+/TestPhotos
+
+
+
