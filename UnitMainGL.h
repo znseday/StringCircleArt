@@ -31,12 +31,12 @@
 
 //struct RGB_Type
 //{
-//	unsigned char r, g, b;
+//    unsigned char r, g, b;
 //};
 
 struct BGR_Type
 {
-	unsigned char b, g, r;
+    unsigned char b, g, r;
 };
 
 enum class HardwareSupportGL
@@ -53,31 +53,31 @@ class MainGLobj
 private:
 protected:
 
-	HDC hDC = nullptr;
-	HGLRC hRC = nullptr;
+    HDC hDC = nullptr;
+    HGLRC hRC = nullptr;
 
-	int BaseForFont = -1;
-	int BaseForLists = -1;
+    int BaseForFont = -1;
+    int BaseForLists = -1;
 
-	float Left = 0, Right = 350, Bottom = 250, Top = 0;
-	bool InitContext();
-	bool SetPixelFormatDescriptor();
-	virtual void InitOther();
-	virtual void InitViewport() const;
+    float Left = 0, Right = 350, Bottom = 250, Top = 0;
+    bool InitContext();
+    bool SetPixelFormatDescriptor();
+    virtual void InitOther();
+    virtual void InitViewport() const;
 
 public:
 
-	MainGLobj() = default;
-	MainGLobj(HDC hdc, float left, float right, float bottom, float top);
-	virtual ~MainGLobj();
+    MainGLobj() = default;
+    MainGLobj(HDC hdc, float left, float right, float bottom, float top);
+    virtual ~MainGLobj();
 
-	void InitObj(HDC hdc, float left, float right, float bottom, float top);
-	bool InitGL();
-	HardwareSupportGL CheckHardwareSupportGL() const;
+    void InitObj(HDC hdc, float left, float right, float bottom, float top);
+    bool InitGL();
+    HardwareSupportGL CheckHardwareSupportGL() const;
 
-	void ShowHardwareSupportAndErrorsGL() const;   // Показать окошко с GL info
+    void ShowHardwareSupportAndErrorsGL() const;   // Показать окошко с GL info
 
-	void ResizeWindow(float left, float right, float bottom, float top);
+    void ResizeWindow(float left, float right, float bottom, float top);
 };
 
 

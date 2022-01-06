@@ -28,26 +28,26 @@
 //---------------------------------------------------------------------------
 
 MainGLobj::MainGLobj(HDC hdc, float left, float right, float bottom, float top)
-	: hRC(nullptr), hDC(hdc),
-	Left(left), Right(right), Bottom(bottom), Top(top),
-	BaseForFont(-1)
+    : hRC(nullptr), hDC(hdc),
+    Left(left), Right(right), Bottom(bottom), Top(top),
+    BaseForFont(-1)
 {
 }
 //---------------------------------------------------------------------------
 
 void MainGLobj::InitObj(HDC hdc, float left, float right, float bottom, float top)
 {
-	hRC = nullptr;
-	hDC = hdc;
-	Left = left; Right = right;
-	Bottom = bottom; Top = top;
+    hRC = nullptr;
+    hDC = hdc;
+    Left = left; Right = right;
+    Bottom = bottom; Top = top;
 }
 //---------------------------------------------------------------------------
 
 MainGLobj::~MainGLobj()
 {
-	wglMakeCurrent(nullptr, nullptr);
-	wglDeleteContext(hRC);
+    wglMakeCurrent(nullptr, nullptr);
+    wglDeleteContext(hRC);
 }
 //---------------------------------------------------------------------------
 
@@ -55,90 +55,90 @@ bool MainGLobj::InitGL()
 {
     if (!InitContext()) return false;
     InitOther();
-	InitViewport();
-	return true;
+    InitViewport();
+    return true;
 }
 //---------------------------------------------------------------------------
 
 void MainGLobj::InitViewport() const
 {
-	glViewport(Left, Bottom, Right, Top);
-	//	glViewport(0, 0, W, H);
+    glViewport(Left, Bottom, Right, Top);
+    //    glViewport(0, 0, W, H);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
 
-	gluPerspective(25.0f,(Right-Left)/abs(Bottom - Top),0.001f,50.0f);
+    gluPerspective(25.0f,(Right-Left)/abs(Bottom - Top),0.001f,50.0f);
 
-	//glFrustum(-2,2,-2,2,3,100);
+    //glFrustum(-2,2,-2,2,3,100);
    // float k = (float)(2*1*200)/(1+200) ;
 
     glTranslatef(0,0,0/*-k*/);
-	glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
 }
 //---------------------------------------------------------------------------
 
 HardwareSupportGL MainGLobj::CheckHardwareSupportGL() const
 {
-	HardwareSupportGL HSGL = HardwareSupportGL::ERR_CHECK_HS_GL;
-	int PixelFormat = GetPixelFormat(hDC);
+    HardwareSupportGL HSGL = HardwareSupportGL::ERR_CHECK_HS_GL;
+    int PixelFormat = GetPixelFormat(hDC);
     PIXELFORMATDESCRIPTOR pfd;
     DescribePixelFormat(hDC,PixelFormat,sizeof(PIXELFORMATDESCRIPTOR),&pfd);
     if ( (pfd.dwFlags & PFD_GENERIC_FORMAT) &&
                    !(pfd.dwFlags & PFD_GENERIC_ACCELERATED) )
-		HSGL = HardwareSupportGL::EMULATION;
+        HSGL = HardwareSupportGL::EMULATION;
     else if ( (pfd.dwFlags & PFD_GENERIC_FORMAT) &&
                     (pfd.dwFlags & PFD_GENERIC_ACCELERATED) )
-		HSGL = HardwareSupportGL::PART_ACCEL;
+        HSGL = HardwareSupportGL::PART_ACCEL;
     else if ( !(pfd.dwFlags & PFD_GENERIC_FORMAT) &&
                     !(pfd.dwFlags & PFD_GENERIC_ACCELERATED) )
-		HSGL = HardwareSupportGL::FULL_ACCEL;
+        HSGL = HardwareSupportGL::FULL_ACCEL;
     return HSGL;
 }
 //---------------------------------------------------------------------------
 
 void MainGLobj::ShowHardwareSupportAndErrorsGL() const
 {
- 	String HS;
-	switch ( CheckHardwareSupportGL() )
-	{
-		case HardwareSupportGL::EMULATION:
-			HS = L"Программная эмуляция OpenGL";
-			break;
-		case HardwareSupportGL::PART_ACCEL:
-			HS = L"Частичная аппаратная поддержка OpenGL";
-			break;
-		case HardwareSupportGL::FULL_ACCEL:
-			HS = L"Полная аппаратная поддержка OpenGL";
-			break;
-		case HardwareSupportGL::ERR_CHECK_HS_GL:
-			HS = L"Ошибка определения типа поддержки OpenGL";
-			break;
-	}
+     String HS;
+    switch ( CheckHardwareSupportGL() )
+    {
+        case HardwareSupportGL::EMULATION:
+            HS = L"Программная эмуляция OpenGL";
+            break;
+        case HardwareSupportGL::PART_ACCEL:
+            HS = L"Частичная аппаратная поддержка OpenGL";
+            break;
+        case HardwareSupportGL::FULL_ACCEL:
+            HS = L"Полная аппаратная поддержка OpenGL";
+            break;
+        case HardwareSupportGL::ERR_CHECK_HS_GL:
+            HS = L"Ошибка определения типа поддержки OpenGL";
+            break;
+    }
 
-	GLenum errCode;
-	String Err = "";
-	if ((errCode = glGetError()) != GL_NO_ERROR)
-	{
-		Err += String((char*)gluErrorString(errCode)) + "\n";
-	}
+    GLenum errCode;
+    String Err = "";
+    if ((errCode = glGetError()) != GL_NO_ERROR)
+    {
+        Err += String((char*)gluErrorString(errCode)) + "\n";
+    }
 
-	if (Err == "")
-	{
-		Err = L"Отсутствуют";
-	}
+    if (Err == "")
+    {
+        Err = L"Отсутствуют";
+    }
 
-	ShowMessage( L"Версия GL :  " + String((char*)glGetString(GL_VERSION)) + "\n" +
-				 L"Версия GLU :  " + String((char*)gluGetString(GLU_VERSION)) +
-				 "\n" + HS + "\n" +
-				 L"Ошибки OpenGL: " + Err);
+    ShowMessage( L"Версия GL :  " + String((char*)glGetString(GL_VERSION)) + "\n" +
+                 L"Версия GLU :  " + String((char*)gluGetString(GLU_VERSION)) +
+                 "\n" + HS + "\n" +
+                 L"Ошибки OpenGL: " + Err);
 }
 //---------------------------------------------------------------------------
 
 void MainGLobj::ResizeWindow(float left, float right, float bottom, float top)
 {
-	Left = left; Right = right;
-	Bottom = bottom; Top = top;
+    Left = left; Right = right;
+    Bottom = bottom; Top = top;
     InitViewport();
 }
 //---------------------------------------------------------------------------
@@ -147,7 +147,7 @@ void MainGLobj::InitOther()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Цвет очистки окна
     glEnable(GL_TEXTURE_2D);
-	glShadeModel(GL_SMOOTH);
+    glShadeModel(GL_SMOOTH);
     glEnable(GL_AUTO_NORMAL);
     glEnable(GL_NORMALIZE);
 }
@@ -162,13 +162,13 @@ bool MainGLobj::InitContext()
 
     if(!hRC)
     {
-		ShowMessage(L"Невозможно создать контекст рендеринга.");
-		return false;
-	}
+        ShowMessage(L"Невозможно создать контекст рендеринга.");
+        return false;
+    }
 
-	if(!wglMakeCurrent(hDC, hRC))
-	{
-		ShowMessage(L"Не возможно аткивировать контекст рендеринга.");
+    if(!wglMakeCurrent(hDC, hRC))
+    {
+        ShowMessage(L"Не возможно аткивировать контекст рендеринга.");
         return false;
     }
     return true;
@@ -194,13 +194,13 @@ bool MainGLobj::SetPixelFormatDescriptor()
     PixelFormat = ChoosePixelFormat(hDC, ppfd);
     if (!PixelFormat)
     {
-	   ShowMessage(L"Не найден подходящий формат пикселей.");
-	   return false;
-	}
-	if(!SetPixelFormat(hDC,PixelFormat,ppfd))
-	{
-       ShowMessage(L"Невозможно установить формат пикселей.");
-       return false;
+        ShowMessage(L"Не найден подходящий формат пикселей.");
+        return false;
+    }
+    if(!SetPixelFormat(hDC,PixelFormat,ppfd))
+    {
+        ShowMessage(L"Невозможно установить формат пикселей.");
+        return false;
     }
     return true;
 }
