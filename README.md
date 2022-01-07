@@ -34,7 +34,7 @@ __by Tsynikin Sergey (Цыникин Сергей Анатольевич)__
 
 Для создания данного демонстрационного арт-объекта был выбран обруч диаметром примерно 41 см, в который было зажато 256 гвоздей. Для большей надежности пространство между гвоздями было залито супер-клеем. Изображение рисовалось одной непрерывной нитью длинной около 2 км, сформировав около 6 тыс. хорд.
 
-![Screenshot](https://github.com/znseday/StringCircleArt/blob/master/Doc/Examples/Real_object_04.jpg)
+![Screenshot](https://github.com/znseday/StringCircleArt/blob/master/Doc/Examples/Real_object_04_b.jpg)
 <img src="https://github.com/znseday/StringCircleArt/blob/master/Doc/Examples/Real_object_02.jpg" alt="Real_Object" width="500"/>
 
 
